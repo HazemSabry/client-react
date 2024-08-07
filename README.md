@@ -53,18 +53,13 @@ RUN npm run build
 FROM nginx:stable-alpine-perl AS production
 COPY --link nginx.config /etc/nginx/config.d/default.conf
 COPY --link --from=development usr/src/app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
-USER nginx:nginx
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
 ```
 
 - Uses the Nginx stable Alpine image with Perl support as the base.
 - Copies the Nginx configuration file to the appropriate directory.
 - Copies the built application from the `development` stage to the Nginx HTML directory.
-- Sets the Nginx user for running the container.
 - Exposes port `80` for the application.
-- Sets the default command to start Nginx in the foreground.
 
 ### Summary
 
